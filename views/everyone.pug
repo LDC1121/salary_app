@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title = "Hello Pug"
+    body
+        table
+            thead
+                tr
+                    th Name
+                    th Salary
+            tbody
+                each row in data
+                    tr
+                        td= row.name
+                        td= row.salary

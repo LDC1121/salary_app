@@ -1,0 +1,11 @@
+{
+    "name": "salary_app",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "Joss & Leah",
+    "dependencies": {
+        "express": "latest",
+        "sqlite3": "latest",
+        "pug": "latest"
+    }
+}
