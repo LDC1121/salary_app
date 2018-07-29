@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var async = require('async');
 
 const sqlite3 = require('sqlite3').verbose();
 
@@ -8,26 +7,29 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.get('/', function(req, res){
-    var responseRows = "";
-    
+    res.render('home');
+});
+
+app.get('/search', (req, res) => {
     let db = new sqlite3.Database('salaries.db', (err) => {
         if(err) {
             throw err;
         }
     });
 
-    db.each('SELECT DISTINCT Name name FROM Salaries;', [], (err, row) =>{
-        if (err) {
+    var name = '%' + req.query.fullname + '%';
+
+    db.all('SELECT DISTINCT Name name, University university, PositionTitle position, BargainingUnit unit FROM Salaries WHERE Name LIKE ?', 
+    [name], (err, rows) => {
+        if(err) {
             throw err;
         }
-        responseRows += row.name;
-    }, (err, number) => {
-        res.send(responseRows);
+        res.render('search_results', { data: rows });
         db.close();
     });
 });
 
-app.get('/first_template', (req, res) => {
+app.get('/everyone', (req, res) => {
     let db = new sqlite3.Database('salaries.db', (err) => {
         if(err) {
             throw err;

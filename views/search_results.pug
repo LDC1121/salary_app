@@ -1,0 +1,10 @@
+doctype html
+html
+    head
+        title = "Results"
+    body
+        each row in data
+            p 
+                b= row.name
+                | #{row.university}
+                | #{row.position}
